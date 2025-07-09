@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>量子隧道</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            border: 2px solid #4a4a4a;
+            margin: 20px;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .quantum-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00ff9d;
+            box-shadow: 0 0 15px #00ff9d;
+        }
+
+        .portal {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px dashed #ff00ff;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .energy-bar {
+            position: absolute;
+            height: 5px;
+            background: #00ff9d;
+            top: 10px;
+            left: 10px;
+            transition: width 0.3s;
+        }
+
+        .obstacle {
+            position: absolute;
+            background: repeating-linear-gradient(
+                45deg,
+                #606dbc,
+                #606dbc 10px,
+                #465298 10px,
+                #465298 20px
+            );
+            border-radius: 5px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        #controls {
+            margin: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #2a2a2a;
+            border: 1px solid #4a4a4a;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #3a3a3a;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div class="energy-bar" id="energyBar"></div>
+    </div>
+    <div id="controls">
+        <button onclick="game.createPortal()">创建虫洞 (剩余: <span id="portalCount">3</span>)</button>
+        <button onclick="game.newGame()">新游戏</button>
+    </div>
+
+    <script>
+        class QuantumGame {
+            constructor() {
+                this.container = document.getElementById('gameContainer');
+                this.energy = 100;
+                this.portals = [];
+                this.portalLimit = 3;
+                this.dots = [];
+                this.obstacles = [];
+                this.gameActive = true;
+                
+                this.init();
+            }
+
+            init() {
+                // 初始化障碍物
+                this.createObstacle(200, 100, 400, 20);
+                this.createObstacle(100, 300, 600, 20);
+                this.createObstacle(500, 200, 20, 200);
+
+                // 开始生成量子点
+                this.spawnDots();
+            }
+
+            createObstacle(x, y, width, height) {
+                const obstacle = document.createElement('div');
+                obstacle.className = 'obstacle';
+                obstacle.style.left = x + 'px';
+                obstacle.style.top = y + 'px';
+                obstacle.style.width = width + 'px';
+                obstacle.style.height = height + 'px';
+                this.container.appendChild(obstacle);
+                this.obstacles.push(obstacle);
+            }
+
+            spawnDots() {
+                setInterval(() => {
+                    if (!this.gameActive) return;
+                    
+                    const dot = document.createElement('div');
+                    dot.className = 'quantum-dot';
+                    dot.style.left = Math.random() * 780 + 'px';
+                    dot.style.top = '-20px';
+                    this.container.appendChild(dot);
+                    this.dots.push({
+                        element: dot,
+                        x: parseFloat(dot.style.left),
+                        y: parseFloat(dot.style.top),
+                        speed: Math.random() * 3 + 2
+                    });
+                }, 1500);
+            }
+
+            update() {
+                if (!this.gameActive) return;
+
+                // 更新量子点位置
+                this.dots.forEach((dot, index) => {
+                    dot.y += dot.speed;
+                    dot.element.style.top = dot.y + 'px';
+
+                    // 碰撞检测
+                    if (this.checkCollision(dot)) {
+                        this.container.removeChild(dot.element);
+                        this.dots.splice(index, 1);
+                        this.energy = Math.max(0, this.energy - 10);
+                        document.getElementById('energyBar').style.width = this.energy + '%';
+                    }
+
+                    // 虫洞传送
+                    this.portals.forEach(portal => {
+                        const portalRect = portal.getBoundingClientRect();
+                        const dotRect = dot.element.getBoundingClientRect();
+                        
+                        if (this.checkCollision(dot, portal)) {
+                            const exitPortal = this.portals.find(p => p !== portal);
+                            if (exitPortal) {
+                                dot.x = parseFloat(exitPortal.style.left) + 30;
+                                dot.y = parseFloat(exitPortal.style.top) + 30;
+                            }
+                        }
+                    });
+
+                    // 游戏失败检测
+                    if (this.energy <= 0) {
+                        this.gameActive = false;
+                        alert('能量耗尽！游戏结束！');
+                    }
+                });
+
+                requestAnimationFrame(() => this.update());
+            }
+
+            checkCollision(element, target) {
+                const elemRect = element.element.getBoundingClientRect();
+                const targetRect = (target || this.container).getBoundingClientRect();
+                
+                return !(elemRect.right < targetRect.left || 
+                        elemRect.left > targetRect.right ||
+                        elemRect.bottom < targetRect.top ||
+                        elemRect.top > targetRect.bottom);
+            }
+
+            createPortal() {
+                if (this.portals.length >= this.portalLimit * 2) return;
+                
+                const portal = document.createElement('div');
+                portal.className = 'portal';
+                portal.style.left = Math.random() * 740 + 'px';
+                portal.style.top = Math.random() * 440 + 'px';
+                this.container.appendChild(portal);
+                this.portals.push(portal);
+                
+                document.getElementById('portalCount').textContent = 
+                    Math.floor(this.portalLimit - this.portals.length/2);
+            }
+        }
+
+        let game;
+
+        function newGame() {
+            if (game) game.container.innerHTML = '';
+            game = new QuantumGame();
+            game.update();
+        }
+
+        // 初始化游戏
+        newGame();
+    </script>
+</body>
+</html>
