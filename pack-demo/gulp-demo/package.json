@@ -1,0 +1,29 @@
+{
+  "name": "rspack-demo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rspack dev",
+    "build": "rspack build",
+    "preview": "rspack preview"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.17",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "browser-sync": "^3.0.4",
+    "del": "^8.0.0",
+    "gulp": "^5.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-terser": "^2.1.0",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "react-refresh": "^0.17.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

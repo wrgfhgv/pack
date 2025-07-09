@@ -1,0 +1,31 @@
+{
+  "presets": [
+    // 转换ES6+语法到目标环境支持的版本
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current" // 针对当前Node版本
+          // 或指定浏览器版本: "browsers": ["last 2 versions", "safari >= 7"]
+        }
+      }
+    ],
+    // 转换TypeScript语法
+    // 转换ES模块为CommonJS以兼容Jest
+    // 转换ES6+语法到目标环境支持的版本
+    // 转换React JSX语法
+    "@babel/preset-react",
+    // 转换TypeScript语法
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true, // 支持所有文件扩展名
+        "isTSX": true,         // 支持TSX
+        "optimizeConstEnums": true // 优化const enum
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs"
+  ]
+}

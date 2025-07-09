@@ -1,0 +1,30 @@
+{
+  "name": "hydration-demo",
+  "version": "1.0.0",
+  "description": "React hydration demo",
+  "main": "index.js",
+  "scripts": {
+    "build:client": "webpack",
+    "build:server": "tsc",
+    "build": "npm run build:client && npm run build:server",
+    "start": "npm run build && ts-node server/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "rspack-demo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "esbuild ./src/main.tsx --bundle --outfile=dist/bundle.js --loader:.tsx=tsx --loader:.svg=file"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "esbuild": "^0.25.6",
+    "react-refresh": "^0.17.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

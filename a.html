@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My CSR App</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+
+    <svg width="200" height="200">
+        <defs>
+            <linearGradient id="mysvg" x1="0" y1="0" x2="100%" y2="100%">
+                <stop offset="0" stop-color="red"/>
+                <stop offset="100" stop-color="blue"/>
+            </linearGradient>
+        </defs>
+    
+        <rect x="0" y="0" width="200" height="200" fill="url(#mysvg)">
+            <animate attributeName="width" values="200;100;200" dur="2s" repeatCount='2'/>
+        </rect>
+    </svg>
+
+    <svg width="200" height="200">
+        <ellipse cx="100" cy="100" rx="50" ry="100">
+            <animate attributeName="fill" from="green" to="red" dur="2s" repeatCount='indefinite'/>
+            <animate attributeName="rx" values="50;100;50" dur="2s" repeatCount='indefinite'/>
+            <animateTransform attributeName="transform" type="rotate" values="0 100 100;360 100 100; 0 100 100" dur="2s" repeatCount='indefinite'/>
+        </ellipse>
+    </svg>
+
+    <script>
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        ctx.beginPath();
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(0, 0, 200, 200);
+
+        ctx.globalCompositionOperation = 'or';
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        ctx.arc(100, 100, 50, 0, Math.PI * 2, false);
+        ctx.fill();
+        
+
+    </script>
+</body>
+</html>
+

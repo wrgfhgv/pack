@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`child component should render 1`] = `
+<DocumentFragment>
+  <div>
+    test
+    <h1>
+      Child
+    </h1>
+  </div>
+</DocumentFragment>
+`;
