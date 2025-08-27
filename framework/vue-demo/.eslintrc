@@ -1,0 +1,10 @@
+{
+  // ... 其他配置
+  "parserOptions": {
+    "parser": "@babel/eslint-parser", // 确保有这行
+    "requireConfigFile": false, // 添加这行，禁用配置文件检查
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  }
+  // ... 其他配置
+}

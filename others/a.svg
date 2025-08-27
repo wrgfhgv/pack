@@ -1,0 +1,93 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 样式定义 -->
+  <style>
+    .box {
+      fill: white;
+      stroke: #333;
+      stroke-width: 2;
+      rx: 6;
+      ry: 6;
+    }
+    .title {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .text {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .arrow {
+      stroke: #666;
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .arrow-head {
+      fill: #666;
+    }
+    .label {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      fill: #666;
+    }
+  </style>
+  
+  <!-- 实例对象 -->
+  <rect x="50" y="50" width="150" height="60" class="box" />
+  <text x="125" y="70" class="title">实例对象 (person)</text>
+  <text x="125" y="90" class="text">{ name: "Alice" }</text>
+  
+  <!-- 构造函数 -->
+  <rect x="50" y="180" width="150" height="60" class="box" />
+  <text x="125" y="200" class="title">构造函数</text>
+  <text x="125" y="220" class="text">Person(name)</text>
+  
+  <!-- Person.prototype -->
+  <rect x="300" y="50" width="180" height="60" class="box" />
+  <text x="390" y="70" class="title">Person.prototype</text>
+  <text x="390" y="90" class="text">{ sayHello: function() {} }</text>
+  
+  <!-- Object.prototype -->
+  <rect x="550" y="50" width="180" height="60" class="box" />
+  <text x="640" y="70" class="title">Object.prototype</text>
+  <text x="640" y="90" class="text">{ toString: function() {}, ... }</text>
+  
+  <!-- null -->
+  <rect x="550" y="180" width="80" height="60" class="box" />
+  <text x="590" y="210" class="title">null</text>
+  
+  <!-- 箭头: 实例对象 -> Person.prototype (__proto__) -->
+  <line x1="200" y1="80" x2="300" y2="80" class="arrow" />
+  <polygon points="300,80 290,75 290,85" class="arrow-head" />
+  <text x="250" y="65" class="label">__proto__</text>
+  
+  <!-- 箭头: 构造函数 -> Person.prototype (prototype) -->
+  <line x1="125" y1="240" x2="125" y2="300" class="arrow" />
+  <line x1="125" y1="300" x2="390" y2="300" class="arrow" />
+  <line x1="390" y1="300" x2="390" y2="110" class="arrow" />
+  <polygon points="390,110 385,120 395,120" class="arrow-head" />
+  <text x="257" y="315" class="label">prototype</text>
+  
+  <!-- 箭头: Person.prototype -> Object.prototype (__proto__) -->
+  <line x1="480" y1="80" x2="550" y2="80" class="arrow" />
+  <polygon points="550,80 540,75 540,85" class="arrow-head" />
+  <text x="515" y="65" class="label">__proto__</text>
+  
+  <!-- 箭头: Object.prototype -> null (__proto__) -->
+  <line x1="640" y1="110" x2="640" y2="180" class="arrow" />
+  <polygon points="640,180 635,170 645,170" class="arrow-head" />
+  <text x="655" y="145" class="label">__proto__</text>
+  
+  <!-- 箭头: 构造函数 -> Function.prototype (隐含关系) -->
+  <line x1="125" y1="210" x2="125" y2="150" class="arrow" stroke-dasharray="5,3" />
+  <text x="140" y="180" class="label" text-anchor="start">__proto__ (隐含)</text>
+  
+  <!-- 说明文字 -->
+  <text x="400" y="550" class="title" fill="#336699">JavaScript原型链结构</text>
+  <text x="400" y="580" class="text" fill="#666">原型链是由__proto__连接的对象链，用于属性查找和继承</text>
+</svg>
+
