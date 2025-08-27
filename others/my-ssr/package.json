@@ -1,0 +1,40 @@
+{
+  "name": "my-ssr",
+  "version": "1.0.0",
+  "scripts": {
+    "build:server": "cross-env config=server webpack build",
+    "build:client": "cross-env config=client webpack build",
+    "build": "npm run build:server && npm run build:client",
+    "start": "npm run build && ts-node server/index.ts",
+    "dev": "webpack serve",
+    "start:prod": "ts-node server/index.ts"
+  },
+  "dependencies": {
+    "css-loader": "^7.1.2",
+    "express": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "ioredis": "^5.7.0",
+    "opener": "^1.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.27.5",
+    "@babel/parser": "^7.27.5",
+    "@babel/traverse": "^7.27.4",
+    "@types/express": "^5.0.2",
+    "@types/opener": "^1.4.3",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^10.0.0",
+    "glob": "^11.0.2",
+    "ts-node": "^10.9.2",
+    "webpack-dev-server": "^5.2.1",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

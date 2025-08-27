@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的PWA应用</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#4285f4" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .install-btn {
+        display: none;
+        margin: 20px 0;
+        padding: 10px 20px;
+        background: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>简易PWA应用</h1>
+    <p>这是一个可以安装到桌面、支持离线访问的PWA示例。</p>
+    <button class="install-btn">安装到桌面</button>
+
+    <script>
+      // 注册Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./sw.js')
+            .then(reg => console.log('Service Worker注册成功'))
+            .catch(err => console.log('注册失败:', err));
+        });
+      }
+
+      // 监听安装提示事件
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log(123, e);
+
+        document.querySelector('.install-btn').style.display = 'block';
+      });
+
+      // 点击安装按钮
+      document.querySelector('.install-btn').addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choiceResult => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('用户同意安装');
+          }
+          deferredPrompt = null;
+        });
+      });
+    </script>
+  </body>
+</html>
